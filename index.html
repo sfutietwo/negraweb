@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#060608">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preload" as="image" href="logo-lg.webp" type="image/webp" fetchpriority="high">
 <link rel="preload" as="image" href="storefront.webp" type="image/webp" media="(min-width:701px)" fetchpriority="high">
 <link rel="preload" as="image" href="storefront-sm.webp" type="image/webp" media="(max-width:700px)" fetchpriority="high">
 <link rel="manifest" href="manifest.webmanifest">
@@ -14,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>(function(d){d.classList.add('js');try{if(sessionStorage.getItem('saw_intro'))d.classList.add('no-intro');else sessionStorage.setItem('saw_intro','1')}catch(e){}})(document.documentElement)</script>
+<script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
   --bg:#060608;--ink:#f5f2ea;--mute:#a09d95;--dim:#6f6c66;
@@ -114,9 +115,13 @@ nav.links a:hover:after,nav.links a.active:after{transform:scaleX(1);transform-o
   radial-gradient(70% 60% at 82% 48%,rgba(6,6,8,.15),rgba(6,6,8,.78) 80%),
   linear-gradient(90deg,rgba(6,6,8,.95) 0%,rgba(6,6,8,.78) 40%,rgba(6,6,8,.5) 100%),
   linear-gradient(0deg,var(--bg) 0%,transparent 28%)}
-.crack{position:absolute;left:50%;top:43%;width:min(900px,66vw);margin-left:max(-420px,-31vw);aspect-ratio:1;transform:translate3d(var(--cx,0px),calc(-50% + var(--cy,0px)),0);z-index:-1;pointer-events:none;opacity:.92;-webkit-mask-image:radial-gradient(circle,#000 38%,transparent 71%);mask-image:radial-gradient(circle,#000 38%,transparent 71%)}
-.crack{--b:.75s}
-html:not(.no-intro) .crack{--b:1.85s}
+.crack{position:absolute;left:50%;top:43%;width:min(900px,66vw);margin-left:max(-420px,-31vw);aspect-ratio:1;transform:translate3d(calc(var(--cx,0px) + var(--ox,0px)),calc(-50% + var(--cy,0px) + var(--oy,0px)),0) rotate(var(--rot,0deg));z-index:-1;pointer-events:none;opacity:.92;transition:opacity 1.1s ease,filter 1.1s ease;-webkit-mask-image:radial-gradient(circle,#000 38%,transparent 71%);mask-image:radial-gradient(circle,#000 38%,transparent 71%)}
+.crack{--b:1.75s}
+.crack:not(.live) *{animation:none!important}
+.crack.heal{opacity:0!important;filter:brightness(2.6) blur(3px)}
+.crack .hl{stroke:#fff}
+.crack .hl2{stroke:#ffe27a}
+.crack .hlw{filter:drop-shadow(0 0 4px rgba(255,226,122,.95))}
 .crack path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 #ckLines path{stroke-dasharray:1;stroke-dashoffset:1;animation:crk var(--u) cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--b) + var(--t))}
 #ckLines .a{stroke-width:2.1}#ckLines .b{stroke-width:1.25}#ckLines .c{stroke-width:.85}#ckLines .d{stroke-width:.55}
@@ -429,14 +434,25 @@ html.lenis,html.lenis body{height:auto}
 .glow.on{opacity:1}
 main,footer{position:relative;z-index:2}
 
-/* intro curtain */
-.intro{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:#060608;clip-path:inset(0);animation:introOut .95s var(--ease) 1s forwards}
-.intro img{height:clamp(84px,14vw,124px);width:auto;animation:introLogo .95s var(--ease) both}
-.intro i{position:absolute;left:50%;top:calc(50% + clamp(64px,10vw,92px));width:170px;height:2px;margin-left:-85px;border-radius:2px;background:var(--goldgrad);box-shadow:0 0 16px rgba(255,196,0,.8);transform-origin:left;animation:introBar .9s var(--ease) .12s both}
+/* loader: 1 second, every load */
+.intro{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,#1b1608,#060608 62%);clip-path:inset(0);animation:introOut .55s cubic-bezier(.7,0,.2,1) 1s forwards}
+.intro-in{position:relative;display:grid;place-items:center;animation:introShake .34s linear .3s,introLift .55s cubic-bezier(.7,0,.2,1) 1s forwards}
+.intro img{position:relative;height:clamp(104px,19vw,176px);width:auto;animation:introSlam .34s cubic-bezier(.3,1.3,.5,1) both,introPulse .5s ease-out .34s}
+.iburst{position:absolute;width:clamp(340px,62vw,600px);aspect-ratio:1;overflow:visible}
+.iburst path{fill:none;stroke:#ffe27a;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:introCrack .3s ease-out .31s forwards,introFadeLines .4s ease-in .7s forwards}
+.iring{position:absolute;width:150px;height:150px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 0 30px rgba(255,196,0,.6),inset 0 0 30px rgba(255,196,0,.35);opacity:0;animation:introRing .65s ease-out .3s forwards}
+.iring.r2{border-color:#fff;border-width:1px;animation-delay:.4s;animation-duration:.6s}
+.ibar{position:absolute;top:calc(100% + 26px);width:190px;height:3px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+.ibar i{position:absolute;inset:0;border-radius:3px;background:var(--goldgrad);box-shadow:0 0 14px rgba(255,196,0,.9);transform:scaleX(0);transform-origin:left;animation:introBar .95s cubic-bezier(.5,0,.2,1) .03s forwards}
 @keyframes introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-@keyframes introLogo{from{opacity:0;transform:scale(.82);filter:blur(12px)}}
-@keyframes introBar{from{transform:scaleX(0)}}
-.no-intro .intro{display:none}
+@keyframes introLift{to{transform:translateY(-70px) scale(1.12);opacity:0}}
+@keyframes introSlam{0%{transform:scale(3) rotate(-10deg);opacity:0;filter:blur(16px)}60%{opacity:1;filter:blur(0)}100%{transform:none}}
+@keyframes introPulse{0%{filter:brightness(2.4) drop-shadow(0 0 40px rgba(255,214,102,.95))}100%{filter:brightness(1) drop-shadow(0 0 16px rgba(255,196,0,.35))}}
+@keyframes introShake{0%{transform:translate(0,0)}15%{transform:translate(-9px,5px)}30%{transform:translate(8px,-6px)}45%{transform:translate(-6px,-4px)}60%{transform:translate(5px,4px)}80%{transform:translate(-2px,1px)}100%{transform:none}}
+@keyframes introCrack{to{stroke-dashoffset:0}}
+@keyframes introFadeLines{to{opacity:0}}
+@keyframes introRing{0%{transform:scale(.25);opacity:.95}100%{transform:scale(4.6);opacity:0}}
+@keyframes introBar{to{transform:scaleX(1)}}
 html:not(.no-intro) header{animation-delay:1.15s}
 html:not(.no-intro) h1 .ln:nth-child(1)>span{animation-delay:1.2s}
 html:not(.no-intro) h1 .ln:nth-child(2)>span{animation-delay:1.33s}
@@ -474,6 +490,9 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
 }
 @media(prefers-reduced-motion:reduce){
   .intro,.glow{display:none}
+  header,h1 .ln>span,h1 .ln>span.gold{animation-delay:0s!important}
+  .js .hero [data-reveal]{transition-delay:0s!important}
+  .crack{--b:0s!important}
   .grain{animation:none}
   .split .w>span{transform:none}
 }
@@ -491,6 +510,23 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
 .spk{position:absolute;width:var(--s,16px);height:var(--s,16px);margin:calc(var(--s,16px)/-2) 0 0 calc(var(--s,16px)/-2);background:radial-gradient(circle,#fff 0 18%,#ffe9a8 42%,rgba(255,196,0,0) 72%);clip-path:polygon(50% 0,54% 46%,100% 50%,54% 54%,50% 100%,46% 54%,0 50%,46% 46%);animation:spk var(--sd,1s) ease-in-out forwards}
 @keyframes spk{0%{transform:scale(0) rotate(-14deg);opacity:0}45%{transform:scale(1) rotate(0deg);opacity:1}100%{transform:scale(0) rotate(14deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){#sparks{display:none}.qcard .rim{animation:none}}
+
+/* ---- hover shine ---- */
+.btn.glass,.chip,.review-i,.tags span,.cta-row,.phones{background-image:linear-gradient(105deg,transparent 45%,rgba(255,255,255,.26) 50%,transparent 55%);background-size:300% 100%;background-position:100% 0;background-repeat:no-repeat}
+.btn.glass:hover,.chip:hover,.review-i:hover,.tags span:hover,.cta-row:hover,.phones:hover{background-image:linear-gradient(105deg,transparent 45%,rgba(255,255,255,.26) 50%,transparent 55%);background-size:300% 100%;background-position:0 0;background-repeat:no-repeat;transition:background-position .95s var(--ease),transform .45s var(--ease),border-color .3s,color .3s,box-shadow .45s,background-color .3s}
+.tags span:hover{border-color:rgba(255,226,122,.8);box-shadow:0 0 22px -4px rgba(255,196,0,.55)}
+.cta-row:hover{border-color:rgba(255,196,0,.3)}
+nav.links a:hover{text-shadow:0 0 16px rgba(255,214,102,.75)}
+.brand img,.cred .bd,.seal div{transition:filter .5s,height .5s var(--ease),transform .5s var(--spring)}
+.brand:hover img{filter:brightness(1.25) drop-shadow(0 0 14px rgba(255,196,0,.75))}
+.cred:hover .bd,.seal:hover div{filter:brightness(1.08) drop-shadow(0 0 18px rgba(255,214,102,.8))}
+.split .w>span{transition:transform 1.05s var(--ease),color .35s,text-shadow .35s}
+.split.go .w:hover>span{color:var(--gold-hi);text-shadow:0 0 26px rgba(255,196,0,.55);transition-delay:0s}
+h1 .ln>span:not(.gold){background:linear-gradient(105deg,var(--ink) 44%,#fff 48%,var(--gold-hi) 50%,#fff 52%,var(--ink) 56%) 100% 0/300% 100% no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1 .ln:hover>span:not(.gold){background-position:0 0;transition:background-position 1.1s var(--ease)}
+.plate:hover{box-shadow:0 0 0 2px #e9e9e2,0 12px 26px -8px rgba(0,0,0,.7),0 0 26px rgba(255,214,102,.55),inset 0 -4px 8px rgba(0,0,0,.08)}
+.step:hover h3,.card:hover h3{color:var(--gold-hi);transition:color .35s}
+.clist a:hover .i{background:var(--goldgrad);color:#14110a;box-shadow:0 0 20px rgba(255,196,0,.6);transition:background .3s,color .3s,box-shadow .3s}
 </style>
 </head>
 <body>
@@ -514,7 +550,7 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
 </defs></svg>
 
-<div class="intro" aria-hidden="true"><img src="logo.webp" width="261" height="168" alt=""><i></i></div>
+<div class="intro" aria-hidden="true"><div class="intro-in"><svg class="iburst" viewBox="-100 -100 200 200"><path pathLength="1" d="M27.4 0.8 L48.8 1.0 L60.5 -8.4 L77.7 -3.4 L93.6 -7.4"/><path pathLength="1" d="M22.4 10.3 L38.5 17.2 L51.5 22.7 L61.7 35.2 L74.4 36.7"/><path pathLength="1" d="M9.3 19.2 L10.6 33.0 L14.8 46.4 L10.5 62.0 L14.2 76.5 L25.5 86.7"/><path pathLength="1" d="M2.1 29.3 L4.9 50.8 L8.4 71.5 L4.6 85.6 L-0.1 91.8"/><path pathLength="1" d="M-10.4 17.1 L-19.2 29.8 L-28.7 41.5 L-33.3 56.6 L-41.4 71.3 L-44.1 80.2"/><path pathLength="1" d="M-22.1 16.4 L-32.2 23.1 L-44.4 36.5 L-55.6 41.8 L-73.5 53.8 L-76.9 55.6"/><path pathLength="1" d="M-23.3 -2.5 L-40.6 2.2 L-60.4 -2.1 L-79.9 -8.7 L-81.9 -22.9"/><path pathLength="1" d="M-21.3 -9.7 L-39.9 -20.0 L-51.4 -31.0 L-65.9 -36.1 L-78.5 -44.4"/><path pathLength="1" d="M-15.4 -22.1 L-22.3 -33.8 L-25.2 -46.6 L-33.3 -60.5 L-48.0 -68.3 L-62.0 -75.8"/><path pathLength="1" d="M-0.4 -20.6 L-5.0 -32.5 L-6.8 -45.7 L-3.5 -65.4 L-7.1 -85.1 L-11.5 -95.6"/><path pathLength="1" d="M13.1 -18.9 L26.2 -36.5 L42.1 -50.1 L52.2 -63.7 L51.2 -70.4"/><path pathLength="1" d="M18.3 -11.2 L37.2 -22.3 L53.7 -36.5 L63.7 -49.0 L66.9 -53.3"/></svg><i class="iring"></i><i class="iring r2"></i><img src="logo-lg.webp" width="559" height="360" alt=""><div class="ibar"><i></i></div></div></div>
 <div class="ambient" aria-hidden="true"><i></i><i></i></div>
 <div class="glow" id="glow" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
@@ -552,12 +588,13 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
 <section class="hero">
   <div class="hero-bg" id="heroBg"><div class="hero-img"></div></div>
   <div class="hero-shade"></div>
-  <svg class="crack" viewBox="0 0 800 800" aria-hidden="true">
+  <svg class="crack live" id="crack" viewBox="0 0 800 800" aria-hidden="true">
     <defs>
     <radialGradient id="ckHaze"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#ffe9a8" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
     <linearGradient id="ckF1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
     <linearGradient id="ckF2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>
     <linearGradient id="ckF3" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#bfe9ff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <radialGradient id="ckSpot"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><radialGradient id="ckGlowG"><stop offset="0" stop-color="#fff6d0" stop-opacity=".2"/><stop offset=".5" stop-color="#ffe08a" stop-opacity=".07"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="ckMask" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="800"><circle id="ckSpotC" cx="-999" cy="-999" r="175" fill="url(#ckSpot)"/></mask>
     <g id="ckLines">
     <path class="a" pathLength="1" style="--t:0.01s;--u:0.32s" d="M405.2 399.9 L438.8 401.3 L465.9 401.2 L484.6 404.7 L501.7 405.4 L521.1 405.9 L545.4 407.5 L569.1 411.5"/>
     <path class="b" pathLength="1" style="--t:0.23s;--u:0.42s" d="M569.1 411.5 L597.0 405.6 L622.1 401.5 L643.0 393.9 L676.8 410.3 L705.6 409.7 L727.3 410.3 L744.2 418.7 L774.5 399.3"/>
@@ -719,6 +756,8 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
     <use href="#ckLines" class="pr1" transform="translate(-1 -.8)"/>
     <use href="#ckLines" class="pr2" transform="translate(1 -.9)"/>
     <use href="#ckLines" class="mn"/>
+    <circle id="ckGlowC" class="hglow" cx="-999" cy="-999" r="190" fill="url(#ckGlowG)"/>
+    <g class="hlw" mask="url(#ckMask)"><use href="#ckLines" class="hl2" transform="translate(-.6 -.6)"/><use href="#ckLines" class="hl"/></g>
     <g class="crush"><path d="M400.0 407.4 L400.5 410.6 L398.5 413.7 M400.1 403.2 L401.0 409.8 L397.8 416.3 M401.3 399.9 L407.2 399.9 L413.1 398.4 M404.5 397.9 L408.0 396.3 L411.8 395.2 M396.0 404.8 L390.7 411.3 L385.3 417.7 M403.7 394.7 L408.4 390.2 L408.7 382.8 M400.4 397.7 L401.1 390.7 L402.7 383.8 M401.1 392.8 L401.3 384.3 L403.4 376.1 M401.0 405.5 L403.4 411.4 L402.6 417.9 M398.8 394.6 L395.7 386.0 L391.6 377.9 M404.9 400.6 L410.7 401.0 L416.5 400.3 M400.5 398.5 L403.4 389.7 L406.4 380.8 M400.8 397.2 L401.4 393.7 L400.8 389.9 M397.7 405.5 L395.8 411.7 L392.0 417.1 M406.4 404.0 L410.0 405.4 L413.8 406.2 M397.2 392.9 L392.6 385.8 L390.3 377.6 M398.2 402.1 L392.8 410.3 L385.4 416.8 M400.6 391.1 L400.7 387.5 L402.7 384.2 M402.8 400.7 L411.9 401.9 L420.8 404.3 M398.7 404.2 L398.6 407.3 L394.9 409.2 M400.6 393.2 L400.3 388.9 L401.6 384.8 M400.2 404.7 L401.2 414.1 L402.8 423.5 M405.8 399.3 L408.6 398.8 L411.5 399.3 M403.5 401.3 L410.3 405.0 L417.6 407.5 M403.6 396.9 L408.2 394.0 L411.3 389.2 M400.5 397.3 L400.9 392.2 L402.8 387.4 M401.4 402.3 L403.5 405.7 L406.3 408.8 M391.5 402.9 L384.0 404.0 L378.3 410.5 M398.8 401.1 L393.3 406.4 L388.5 412.5 M402.4 400.3 L406.9 400.6 L410.9 403.2 M399.3 396.9 L397.5 392.0 L399.4 386.4 M395.5 405.5 L389.3 410.6 L389.0 420.2 M398.2 403.7 L396.3 406.2 L396.1 409.6 M400.7 394.9 L400.8 392.0 L400.3 389.0 M402.1 400.6 L409.1 401.3 L415.9 402.9 M395.2 402.5 L391.9 403.7 L389.6 406.7 M399.0 393.7 L397.8 390.3 L396.8 386.9 M399.0 395.9 L398.6 390.5 L394.9 385.8 M399.0 403.6 L398.8 407.8 L399.1 412.0 M396.2 396.0 L391.6 388.7 L383.2 384.7 M396.0 392.7 L394.5 388.8 L393.0 384.9 M407.6 397.8 L411.8 397.0 L414.9 392.9 M396.3 401.8 L393.7 403.3 L391.3 405.0 M396.8 400.1 L393.1 400.3 L389.4 400.3 M403.2 405.5 L406.2 408.6 L408.3 412.4 M398.1 401.0 L391.8 403.9 L385.8 407.2"/></g>
     <g class="glint">
     <path pathLength="1" style="--g:4.9s" d="M405.2 399.9 L438.8 401.3 L465.9 401.2 L484.6 404.7 L501.7 405.4 L521.1 405.9 L545.4 407.5 L569.1 411.5 L597.0 405.6 L622.1 401.5 L643.0 393.9 L676.8 410.3 L705.6 409.7 L727.3 410.3 L744.2 418.7 L774.5 399.3"/>
@@ -1095,6 +1134,7 @@ function frame(t){
 if(lenis||(fine&&!reduce)) requestAnimationFrame(frame);
 
 /* ---- crystal sparkles ---- */
+let mkSpark=()=>{};
 if(!reduce){
   const layer=$('#sparks'), spots=$$('h1 .gold,.crack,.seal,.score .n,.cbox.go h3,.stitle h2');
   const vis=new Set(), sIO=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target)));
@@ -1106,10 +1146,48 @@ if(!reduce){
     const a=Math.random()*6.283, d=Math.sqrt(Math.random())*.3;
     const x=k?r.left+r.width*(.5+Math.cos(a)*d):r.left+Math.random()*r.width, y=k?r.top+r.height*(.5+Math.sin(a)*d):r.top+Math.random()*r.height;
     if(x<4||x>innerWidth-4) return;
-    const sp=document.createElement('i'); sp.className='spk';
-    sp.style.cssText='left:'+x+'px;top:'+(y+scrollY)+'px;--s:'+(14+Math.random()*22).toFixed(0)+'px;--sd:'+(.7+Math.random()*.7).toFixed(2)+'s';
-    layer.appendChild(sp); sp.addEventListener('animationend',()=>layer.removeChild(sp));
+    mkSpark(x,y);
   })();
+  mkSpark=(x,y,big)=>{
+    const sp=document.createElement('i'); sp.className='spk';
+    sp.style.cssText='left:'+x+'px;top:'+(y+scrollY)+'px;--s:'+((big?22:14)+Math.random()*22).toFixed(0)+'px;--sd:'+(.7+Math.random()*.7).toFixed(2)+'s';
+    layer.appendChild(sp); sp.addEventListener('animationend',()=>layer.removeChild(sp));
+  };
+}
+
+/* ---- crack: breaks, gets repaired, comes back somewhere new ---- */
+const ck=$('#crack');
+if(ck&&!reduce){
+  let rot=0, heroOn=true;
+  new IntersectionObserver(es=>es.forEach(e=>heroOn=e.isIntersecting)).observe(hero);
+  const HOLD=6200, GAP=3800;
+  function heal(){
+    const r=ck.getBoundingClientRect(), mx=r.left+r.width/2, my=r.top+r.height/2;
+    if(heroOn&&!document.hidden) for(let i=0;i<7;i++) setTimeout(()=>{const a=Math.random()*6.283,d=Math.random()*r.width*.2;mkSpark(mx+Math.cos(a)*d,my+Math.sin(a)*d,true)},i*90);
+    ck.classList.add('heal');
+    setTimeout(()=>{ck.classList.remove('live','heal');setTimeout(strike,GAP)},1250);
+  }
+  function strike(){
+    if(document.hidden||!heroOn){setTimeout(strike,1500);return}
+    rot=Math.random()*360;
+    ck.style.setProperty('--b','0s');ck.style.setProperty('--rot',rot.toFixed(0)+'deg');
+    ck.style.setProperty('--ox',((Math.random()-.5)*innerWidth*.16).toFixed(0)+'px');ck.style.setProperty('--oy',((Math.random()-.5)*150).toFixed(0)+'px');
+    void ck.getBoundingClientRect();
+    ck.classList.add('live');
+    setTimeout(heal,HOLD);
+  }
+  setTimeout(heal,1750+HOLD);
+  /* light up the glass under the cursor */
+  if(fine){
+    const spot=$('#ckSpotC'), gl=$('#ckGlowC'); let px=0,py=0,wait=false;
+    hero.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;if(wait)return;wait=true;requestAnimationFrame(()=>{wait=false;
+      const r=ck.getBoundingClientRect(), w=parseFloat(getComputedStyle(ck).width)||r.width, k=800/w, t=-rot*Math.PI/180;
+      const dx=(px-(r.left+r.width/2))*k, dy=(py-(r.top+r.height/2))*k;
+      const x=(400+dx*Math.cos(t)-dy*Math.sin(t)).toFixed(1), y=(400+dx*Math.sin(t)+dy*Math.cos(t)).toFixed(1);
+      spot.setAttribute('cx',x);spot.setAttribute('cy',y);gl.setAttribute('cx',x);gl.setAttribute('cy',y);
+    })},{passive:true});
+    hero.addEventListener('pointerleave',()=>{spot.setAttribute('cx',-999);gl.setAttribute('cx',-999)});
+  }
 }
 
 /* ---- click ripple ---- */
