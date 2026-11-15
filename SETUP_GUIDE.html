@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Form Website — Setup Guide</title>
+<style>
+  :root{--yellow:#ffc400;--dark:#0d0d0d;}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,Segoe UI,Arial,Helvetica,sans-serif;background:#f5f6f8;color:#1f2937;margin:0;padding:0;line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+  header{background:var(--dark);color:#fff;padding:40px 24px;text-align:center}
+  header h1{margin:0 0 8px;font-size:28px}
+  header p{margin:0;color:#bbb;font-size:15px}
+  h2{font-size:22px;margin-top:48px;border-bottom:3px solid var(--yellow);padding-bottom:8px}
+  h3{font-size:17px;margin-top:28px;color:#111}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px 22px;margin:16px 0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  .step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--yellow);color:#000;border-radius:50%;font-weight:900;font-size:14px;margin-right:10px}
+  code, .code{background:#111827;color:#e5e7eb;padding:3px 8px;border-radius:5px;font-family:'SF Mono',Consolas,monospace;font-size:13px}
+  .codeblock{background:#111827;color:#e5e7eb;padding:14px 16px;border-radius:8px;font-family:'SF Mono',Consolas,monospace;font-size:13px;overflow-x:auto;margin:10px 0}
+  .note{background:#fff8e1;border-left:4px solid var(--yellow);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px}
+  .warn{background:#fef2f2;border-left:4px solid #ef4444;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px}
+  .checklist{list-style:none;padding:0;margin:14px 0}
+  .checklist li{padding:8px 0 8px 30px;position:relative}
+  .checklist li:before{content:"☐";position:absolute;left:0;font-size:18px;color:#999}
+  a{color:#2563eb}
+  table{width:100%;border-collapse:collapse;margin:14px 0}
+  td,th{border:1px solid #e5e7eb;padding:8px 12px;text-align:left;font-size:14px}
+  th{background:#f8fafc}
+  .toc{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:16px 22px;margin-top:20px}
+  .toc a{display:block;padding:4px 0;text-decoration:none;color:#1f2937}
+  .toc a:hover{color:#2563eb}
+  footer{text-align:center;color:#888;font-size:13px;padding:30px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📋 Quote Form Website — Setup Guide</h1>
+  <p>Everything you need to get this website live and receiving customer requests by email.</p>
+</header>
+
+<div class="wrap">
+
+<div class="note">
+  <b>What you're getting:</b> A ready-made website with a customer quote/request form. When someone submits it, the details are emailed straight to your inbox — no dashboard, no login, no database to manage. You just need two free accounts to switch it on.
+</div>
+
+<div class="toc">
+  <b>Contents</b>
+  <a href="#part1">Part 1 — What's in this folder</a>
+  <a href="#part2">Part 2 — Create your two free accounts (10 minutes)</a>
+  <a href="#part3">Part 3 — Connect the website to your email (5 minutes)</a>
+  <a href="#part4">Part 4 — Put the website online</a>
+  <a href="#part5">Part 5 — Customise it for your business</a>
+  <a href="#part6">Part 6 — Test it</a>
+  <a href="#part7">Troubleshooting</a>
+</div>
+
+<h2 id="part1">Part 1 — What's in this folder</h2>
+<table>
+  <tr><th>File</th><th>What it is</th></tr>
+  <tr><td><code>index.html</code></td><td>The website itself. This is the file people will see.</td></tr>
+  <tr><td><code>saw-config.js</code></td><td>One small settings file — this is the only file you need to edit.</td></tr>
+  <tr><td><code>send-quote-request-function.ts</code></td><td>The "engine" that emails you when someone submits the form. You'll paste this into Supabase (Part 2).</td></tr>
+  <tr><td>Images (.png / .jpg)</td><td>Logo and photos used on the site.</td></tr>
+</table>
+
+<h2 id="part2">Part 2 — Create your two free accounts</h2>
+<p>You need two free accounts. Neither needs a credit card.</p>
+
+<div class="card">
+  <h3><span class="step-num">1</span>Create a free Supabase account</h3>
+  <p>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> → Sign up (free) → Create a new project. Pick any name and password, and choose the region closest to your customers.</p>
+  <p>Wait about 2 minutes for the project to finish setting up.</p>
+</div>
+
+<div class="card">
+  <h3><span class="step-num">2</span>Deploy the email function (no coding needed)</h3>
+  <p>In your new Supabase project, go to the <b>Edge Functions</b> section in the left menu → <b>Deploy a new function</b> → give it the name <code>send-quote-request</code>.</p>
+  <p>Open <code>send-quote-request-function.ts</code> from this folder in a text editor, select all the text, copy it, and paste it into the code box Supabase gives you. Click <b>Deploy</b>.</p>
+  <p>Once deployed, click on the function and copy its <b>URL</b> — it will look like:</p>
+  <div class="codeblock">https://YOUR-PROJECT-ID.supabase.co/functions/v1/send-quote-request</div>
+  <p>Keep this URL handy — you'll need it in Part 3.</p>
+</div>
+
+<div class="card">
+  <h3><span class="step-num">3</span>Create a free Brevo account (this is what sends the emails)</h3>
+  <p>Go to <a href="https://www.brevo.com" target="_blank">brevo.com</a> → Sign up (free plan — 300 emails/day, plenty for this). Use the same email address you want notifications sent <i>from</i>.</p>
+  <p>Once logged in, go to your profile → <b>Settings</b> → <b>SMTP & API</b> → <b>API Keys</b> tab → <b>Generate a new API key</b>. Name it anything, then copy the key (it starts with <code>xkeysib-</code>).</p>
+  <div class="note">Because you signed up with your own email, that email is automatically an approved sender — no domain purchase or verification needed.</div>
+</div>
+
+<h2 id="part3">Part 3 — Connect the website to your email</h2>
+
+<div class="card">
+  <h3><span class="step-num">4</span>Add your secrets in Supabase</h3>
+  <p>In Supabase, go to <b>Edge Functions</b> → click on <code>send-quote-request</code> → <b>Secrets</b> tab → add these four:</p>
+  <table>
+    <tr><th>Secret name</th><th>Value</th></tr>
+    <tr><td><code>BREVO_API_KEY</code></td><td>The API key you copied from Brevo</td></tr>
+    <tr><td><code>SENDER_EMAIL</code></td><td>The email address you signed up to Brevo with</td></tr>
+    <tr><td><code>NOTIFY_TO_EMAIL</code></td><td>Not needed any more — requests are always sent to <b>sfutie4@gmail.com</b> (set in the function code).</td></tr>
+    <tr><td><code>BUSINESS_NAME</code></td><td>Your business name, e.g. <i>Joe's Plumbing</i></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3><span class="step-num">5</span>Edit <code>saw-config.js</code></h3>
+  <p>Open <code>saw-config.js</code> in any plain text editor (Notepad, TextEdit, VS Code — anything works). Replace the placeholder with the function URL you copied in Step 2:</p>
+  <div class="codeblock">window.SAW_SUPABASE_CONFIG = {
+  sendUrl: "https://YOUR-PROJECT-ID.supabase.co/functions/v1/send-quote-request"
+};</div>
+  <p>Save the file. That's the only file you ever need to edit.</p>
+</div>
+
+<h2 id="part4">Part 4 — Put the website online</h2>
+<p>Since you already have a website or domain, pick whichever matches your situation:</p>
+
+<div class="card">
+  <h3>Option A — You have web hosting with file upload (cPanel, FTP, etc.)</h3>
+  <p>Upload every file in this folder (except <code>send-quote-request-function.ts</code> and this guide) into your website's folder — usually called <code>public_html</code> or <code>www</code>. If you want it as its own page rather than replacing your homepage, put the files in a subfolder like <code>/quote/</code> and it'll appear at <code>yourdomain.com/quote/</code>.</p>
+</div>
+
+<div class="card">
+  <h3>Option B — You use WordPress, Wix, Squarespace or similar</h3>
+  <p>These platforms don't let you upload raw HTML files directly. The easiest fix is a separate free page:</p>
+  <ul>
+    <li>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> (no account needed for a quick one-off, free account recommended for a permanent link)</li>
+    <li>Drag this whole folder onto the page — you'll get a live link instantly</li>
+    <li>Add a "Get a Quote" button on your existing website that links to that new page</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Option C — You don't have hosting yet</h3>
+  <p>Netlify (free) is the simplest: create a free account at <a href="https://netlify.com" target="_blank">netlify.com</a>, drag this folder onto their dashboard, and you'll get a free <code>yourname.netlify.app</code> address instantly. You can connect your own domain to it later, still free.</p>
+</div>
+
+<h2 id="part5">Part 5 — Customise it for your business</h2>
+<p>Open <code>index.html</code> in a text editor and use Find &amp; Replace for these common things:</p>
+<ul class="checklist">
+  <li>Business name and logo (search for the current business name, replace throughout)</li>
+  <li>Phone number and email address in the footer/contact section</li>
+  <li>Service area / location text</li>
+  <li>Colours — search for <code>--yellow:</code> near the top of the file to change the accent colour</li>
+</ul>
+<div class="note">Keep a backup copy of the original files before editing, in case you want to start over.</div>
+
+<h2 id="part6">Part 6 — Test it</h2>
+<ul class="checklist">
+  <li>Open your live site in a browser</li>
+  <li>Fill out the quote form with test details and submit</li>
+  <li>Check the <b>sfutie4@gmail.com</b> inbox — the request should arrive within a few seconds</li>
+  <li>Check your spam folder the first time, just in case</li>
+</ul>
+
+<h2 id="part7">Troubleshooting</h2>
+<table>
+  <tr><th>Problem</th><th>Likely fix</th></tr>
+  <tr><td>Nothing arrives by email</td><td>Double-check all 4 secrets are saved correctly in Supabase, with no extra spaces</td></tr>
+  <tr><td>Form shows "Could not send"</td><td>Check <code>saw-config.js</code> has the correct function URL, including <code>https://</code></td></tr>
+  <tr><td>Emails go to spam</td><td>Normal at first with a free Brevo sender — ask the recipient to mark it "not spam" once</td></tr>
+</table>
+
+<div class="warn">
+  <b>Free tier limits:</b> Brevo's free plan allows 300 emails/day — more than enough for most small businesses. Supabase's free tier pauses a project after a week of no activity; if that happens, just log in to Supabase and click "Restore" — takes about a minute and nothing is lost.
+</div>
+
+</div>
+
+<footer>Questions about this setup can be answered by whoever built this site for you.</footer>
+
+</body>
+</html>
