@@ -391,6 +391,9 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 @media(max-width:980px){
   .hero{padding-bottom:70px}
   .hero-bg,.hero-shade{bottom:auto;height:min(100%,860px)}
+  .hero-bg{-webkit-mask-image:linear-gradient(to bottom,#000 46%,transparent 86%);mask-image:linear-gradient(to bottom,#000 46%,transparent 86%)}
+  .js #quote[data-reveal]{opacity:1;transform:none;transition:none}
+  .js [data-reveal]{transition-delay:min(var(--d,0s),.1s)}
   .hero-grid{grid-template-columns:minmax(0,1fr);gap:46px}
   .crack{left:auto;margin-left:0;right:-34%;top:250px;width:min(560px,96vw);opacity:.75}
   .rgrid,.contact,.svc{grid-template-columns:minmax(0,1fr)}
@@ -464,7 +467,7 @@ html:not(.no-intro) h1 .ln:nth-child(1)>span{animation-delay:1.2s}
 html:not(.no-intro) h1 .ln:nth-child(2)>span{animation-delay:1.33s}
 html:not(.no-intro) h1 .ln:nth-child(3)>span{animation-delay:1.46s}
 html:not(.no-intro) h1 .ln>span.gold{animation-delay:1.33s,2.6s}
-html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .95s)}
+html:not(.ready).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .95s)}
 
 /* split headings */
 .split .w{display:inline-block;clip-path:inset(-10% -40% -4% -10%);vertical-align:top}
@@ -1241,7 +1244,8 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
   const el=e.target; el.classList.add('in'); io.unobserve(el);
   const d=parseFloat(el.style.getPropertyValue('--d'))||0;
   setTimeout(()=>{el.removeAttribute('data-reveal');el.classList.remove('in')},(2.4+d)*1000);
-}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+}}),fine?{threshold:.12,rootMargin:'0px 0px -6% 0px'}:{threshold:.01,rootMargin:'0px 0px 14% 0px'});
+setTimeout(()=>document.documentElement.classList.add('ready'),2200);
 $$('[data-reveal]').forEach(el=>io.observe(el));
 const howIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');howIO.disconnect()}}),{threshold:.3});
 howIO.observe($('#howRow'));
