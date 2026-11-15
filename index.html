@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Negra</title>
+  <meta name="description" content="Negra — official website.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#">Negra</a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Welcome to Negra</h1>
+      <p>A short line about what Negra is and why people should care.</p>
+      <a class="btn" href="#contact">Get in touch</a>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p>Tell your story here: who you are, what you do, and what makes you different.</p>
+    </section>
+
+    <section id="services" class="section alt">
+      <h2>Services</h2>
+      <div class="cards">
+        <article class="card"><h3>Service one</h3><p>Describe this offering.</p></article>
+        <article class="card"><h3>Service two</h3><p>Describe this offering.</p></article>
+        <article class="card"><h3>Service three</h3><p>Describe this offering.</p></article>
+      </div>
+    </section>
+
+    <section id="gallery" class="section">
+      <h2>Gallery</h2>
+      <div class="gallery">
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section alt">
+      <h2>Contact</h2>
+      <form class="contact" onsubmit="event.preventDefault(); this.querySelector('.msg').hidden=false; this.reset();">
+        <input name="name" placeholder="Your name" required>
+        <input name="email" type="email" placeholder="Your email" required>
+        <textarea name="message" rows="5" placeholder="Your message" required></textarea>
+        <button class="btn" type="submit">Send</button>
+        <p class="msg" hidden>Thanks! We'll be in touch.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Negra. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const t = document.querySelector('.menu-toggle'), n = document.querySelector('.nav');
+    t.addEventListener('click', () => { const o = n.classList.toggle('open'); t.setAttribute('aria-expanded', o); });
+    n.addEventListener('click', e => { if (e.target.tagName === 'A') { n.classList.remove('open'); t.setAttribute('aria-expanded', false); } });
+  </script>
+</body>
+</html>
