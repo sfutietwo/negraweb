@@ -120,15 +120,15 @@ nav.links a:hover:after,nav.links a.active:after{transform:scaleX(1);transform-o
 .crack:not(.live) *{animation:none!important}
 .crack.heal{opacity:0!important;filter:brightness(2.6) blur(3px)}
 .crack .hl{stroke:#fff}
-.crack .hl2{stroke:#ffe27a}
-.crack .hlw{filter:drop-shadow(0 0 4px rgba(255,226,122,.95))}
+.crack .hl2{stroke:#fff3cf}
+
 .crack path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 #ckLines path{stroke-dasharray:1;stroke-dashoffset:1;animation:crk var(--u) cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--b) + var(--t))}
-#ckLines .a{stroke-width:2.1}#ckLines .b{stroke-width:1.25}#ckLines .c{stroke-width:.85}#ckLines .d{stroke-width:.55}
-.crack .mn{stroke:rgba(255,255,255,.74)}
-.crack .sh{stroke:rgba(0,0,0,.6)}
-.crack .pr1{stroke:rgba(255,206,84,.42)}
-.crack .pr2{stroke:rgba(140,220,255,.3)}
+#ckLines .a{stroke-width:1.35}#ckLines .b{stroke-width:.85}#ckLines .c{stroke-width:.6}#ckLines .d{stroke-width:.4}
+.crack .mn{stroke:rgba(236,242,246,.62)}
+.crack .sh{stroke:rgba(0,0,0,.7)}
+.crack .pr1{stroke:rgba(255,236,190,.16)}
+.crack .pr2{stroke:rgba(170,215,240,.16)}
 .crack .crush path{stroke:rgba(255,255,255,.8);stroke-width:.9;opacity:0;animation:ckFade .3s ease-out forwards;animation-delay:var(--b)}
 .crack .haze{opacity:0;animation:ckFade .6s ease-out forwards;animation-delay:var(--b)}
 .crack .core{fill:#fff;opacity:0;animation:ckFade .2s forwards;animation-delay:var(--b)}
@@ -160,11 +160,11 @@ h1 .ln>span.gold{display:inline-block;padding-right:.12em;background:linear-grad
 .cred span{display:block;font:600 10px/1.5 var(--body);letter-spacing:.22em;color:var(--mute)}
 
 /* reveal system */
-.js [data-reveal]{opacity:0;transform:translateY(34px) scale(.985);filter:blur(8px);transition:opacity 1s var(--ease),transform 1.1s var(--ease),filter .9s var(--ease);transition-delay:var(--d,0s)}
+.js [data-reveal]{opacity:0;transform:translate3d(0,34px,0) scale(.985);transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s);will-change:opacity,transform}
 .js [data-reveal].in{opacity:1;transform:none;filter:none}
 
 /* ---------- quote card ---------- */
-.qcard{position:relative;border-radius:28px;padding:28px 28px 24px;background:var(--glass);border:1px solid var(--line2);backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);box-shadow:0 50px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.02),inset 0 1px 0 rgba(255,255,255,.14);overflow:hidden;isolation:isolate}
+.qcard{position:relative;border-radius:28px;padding:28px 28px 24px;background:var(--glass);border:1px solid var(--line2);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:0 50px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.02),inset 0 1px 0 rgba(255,255,255,.14);overflow:hidden;isolation:isolate}
 .qcard:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx,80%) var(--my,0%),rgba(255,196,0,.14),transparent 60%)}
 .qcard:after{content:"";position:absolute;top:0;bottom:0;left:-80%;width:45%;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.08),transparent);transform:skewX(-18deg);animation:glare 7.5s ease-in-out 2s infinite}
 @keyframes glare{0%{left:-80%}40%,100%{left:170%}}
@@ -439,7 +439,7 @@ main,footer{position:relative;z-index:2}
 .intro-in{position:relative;display:grid;place-items:center;animation:introShake .34s linear .3s,introLift .55s cubic-bezier(.7,0,.2,1) 1s forwards}
 .intro img{position:relative;height:clamp(104px,19vw,176px);width:auto;animation:introSlam .34s cubic-bezier(.3,1.3,.5,1) both,introPulse .5s ease-out .34s}
 .iburst{position:absolute;width:clamp(340px,62vw,600px);aspect-ratio:1;overflow:visible}
-.iburst path{fill:none;stroke:#ffe27a;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:introCrack .3s ease-out .31s forwards,introFadeLines .4s ease-in .7s forwards}
+.iburst path{fill:none;stroke:rgba(255,255,255,.75);stroke-width:.45;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:introCrack .3s ease-out .31s forwards,introFadeLines .4s ease-in .7s forwards}
 .iring{position:absolute;width:150px;height:150px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 0 30px rgba(255,196,0,.6),inset 0 0 30px rgba(255,196,0,.35);opacity:0;animation:introRing .65s ease-out .3s forwards}
 .iring.r2{border-color:#fff;border-width:1px;animation-delay:.4s;animation-duration:.6s}
 .ibar{position:absolute;top:calc(100% + 26px);width:190px;height:3px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
@@ -501,9 +501,11 @@ html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .
 .card:after,.rcard:after,.score:after,.cbox:not(.go):after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.2px;pointer-events:none;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.95),rgba(255,214,102,.75) 28%,rgba(150,225,255,.4) 52%,transparent 72%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s}
 .rcard,.score{position:relative}
 .card:hover:after,.rcard:hover:after,.score:hover:after,.cbox:not(.go):hover:after{opacity:1}
-.qcard .rim{position:absolute;inset:0;z-index:3;border-radius:inherit;padding:1.3px;pointer-events:none;background:conic-gradient(from var(--ang,0deg),transparent,rgba(255,214,102,.85) 9%,transparent 20%,transparent 46%,rgba(170,230,255,.6) 54%,rgba(255,255,255,.7) 58%,transparent 68%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.qcard .rim{position:absolute;inset:0;z-index:3;border-radius:inherit;padding:1.3px;pointer-events:none;overflow:hidden;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.qcard .rim:before{content:"";position:absolute;left:50%;top:50%;width:210%;aspect-ratio:1;transform:translate(-50%,-50%);will-change:transform;background:conic-gradient(transparent,rgba(255,214,102,.85) 9%,transparent 20%,transparent 46%,rgba(170,230,255,.6) 54%,rgba(255,255,255,.7) 58%,transparent 68%);animation:rimSpin 9s linear infinite}
+@keyframes rimSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
-.qcard .rim{animation:angSpin 9s linear infinite}
+
 @keyframes angSpin{to{--ang:360deg}}
 .ico,.node{background-image:linear-gradient(140deg,rgba(255,255,255,.16),transparent 42%,transparent 60%,rgba(255,255,255,.06))}
 #sparks{position:absolute;left:0;top:0;width:100%;height:0;z-index:60;pointer-events:none}
@@ -527,6 +529,15 @@ h1 .ln:hover>span:not(.gold){background-position:0 0;transition:background-posit
 .plate:hover{box-shadow:0 0 0 2px #e9e9e2,0 12px 26px -8px rgba(0,0,0,.7),0 0 26px rgba(255,214,102,.55),inset 0 -4px 8px rgba(0,0,0,.08)}
 .step:hover h3,.card:hover h3{color:var(--gold-hi);transition:color .35s}
 .clist a:hover .i{background:var(--goldgrad);color:#14110a;box-shadow:0 0 20px rgba(255,196,0,.6);transition:background .3s,color .3s,box-shadow .3s}
+.glow,.hero-bg,.hero-img,.track,.grain{backface-visibility:hidden}
+@keyframes glare{0%{transform:translateX(0) skewX(-18deg)}40%,100%{transform:translateX(560%) skewX(-18deg)}}
+/* live background blur re-renders every frame and was the main cause of dropped frames; solid dark glass instead */
+header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,8,.92)}
+.mmenu{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,8,.975)}
+.btn.glass{backdrop-filter:none;-webkit-backdrop-filter:none;background-color:rgba(24,24,28,.6)}
+.qcard{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(160deg,rgba(34,33,36,.9),rgba(13,13,16,.88))}
+.toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,18,22,.97)}
+.card,.btn,.submit,.chip{will-change:transform}
 </style>
 </head>
 <body>
@@ -1014,7 +1025,7 @@ howIO.observe($('#howRow'));
 /* ---- smooth scrolling (Lenis) ---- */
 let lenis=null;
 if(window.Lenis&&fine&&!reduce){
-  lenis=new Lenis({lerp:.095,wheelMultiplier:1,smoothWheel:true});
+  lenis=new Lenis({lerp:.11,wheelMultiplier:1,smoothWheel:true,syncTouch:false});
 }
 function goTo(target){
   const y=target==='#home'?0:null, el=y===null?document.querySelector(target):null;
@@ -1113,20 +1124,23 @@ if(fine&&!reduce){
     thx=(e.clientX/innerWidth-.5);thy=(e.clientY/innerHeight-.5)},{passive:true});
   document.documentElement.addEventListener('pointerleave',()=>glow.classList.remove('on'));
 }
+let pt=0;
 function frame(t){
+  const dt=Math.min((t-(pt||t))/1000,.05); pt=t;
+  const k1=1-Math.exp(-dt*9), k2=1-Math.exp(-dt*4.2), k3=1-Math.exp(-dt*6.5);
   if(lenis) lenis.raf(t);
   if(fine&&!reduce){
-    cx+=(gx-cx)*.12;cy+=(gy-cy)*.12;
-    glow.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0)';
-    if(scrollY<innerHeight){
-      hx+=(thx-hx)*.06;hy+=(thy-hy)*.06;
-      crack.style.setProperty('--cx',(hx*-34).toFixed(2)+'px');crack.style.setProperty('--cy',(hy*-26).toFixed(2)+'px');
+    if(Math.abs(gx-cx)+Math.abs(gy-cy)>.05){cx+=(gx-cx)*k1;cy+=(gy-cy)*k1;
+      glow.style.transform='translate3d('+cx.toFixed(2)+'px,'+cy.toFixed(2)+'px,0)';}
+    if(scrollY<innerHeight&&Math.abs(thx-hx)+Math.abs(thy-hy)>.0004){
+      hx+=(thx-hx)*k2;hy+=(thy-hy)*k2;
+      if(crack.isConnected){crack.style.setProperty('--cx',(hx*-34).toFixed(2)+'px');crack.style.setProperty('--cy',(hy*-26).toFixed(2)+'px');}
       heroBg.style.setProperty('--bx',(hx*14).toFixed(2)+'px');heroBg.style.setProperty('--by',(hy*10).toFixed(2)+'px');
     }
   }
   if(lenis&&tracks.length){
     const want=1+Math.min(Math.abs(lenis.velocity)/9,5);
-    rate+=(want-rate)*.1;
+    rate+=(want-rate)*k3;
     if(Math.abs(rate-(tracks[0].playbackRate||1))>.02) tracks.forEach(a=>a.playbackRate=rate);
   }
   requestAnimationFrame(frame);
@@ -1155,32 +1169,23 @@ if(!reduce){
   };
 }
 
-/* ---- crack: breaks, gets repaired, comes back somewhere new ---- */
+/* ---- crack: breaks once, gets repaired, then is gone ---- */
 const ck=$('#crack');
 if(ck&&!reduce){
   let rot=0, heroOn=true;
   new IntersectionObserver(es=>es.forEach(e=>heroOn=e.isIntersecting)).observe(hero);
-  const HOLD=6200, GAP=3800;
+  const HOLD=4200;
   function heal(){
     const r=ck.getBoundingClientRect(), mx=r.left+r.width/2, my=r.top+r.height/2;
-    if(heroOn&&!document.hidden) for(let i=0;i<7;i++) setTimeout(()=>{const a=Math.random()*6.283,d=Math.random()*r.width*.2;mkSpark(mx+Math.cos(a)*d,my+Math.sin(a)*d,true)},i*90);
+    if(heroOn&&!document.hidden) for(let i=0;i<6;i++) setTimeout(()=>{const a=Math.random()*6.283,d=Math.random()*r.width*.2;mkSpark(mx+Math.cos(a)*d,my+Math.sin(a)*d,true)},i*90);
     ck.classList.add('heal');
-    setTimeout(()=>{ck.classList.remove('live','heal');setTimeout(strike,GAP)},1250);
-  }
-  function strike(){
-    if(document.hidden||!heroOn){setTimeout(strike,1500);return}
-    rot=Math.random()*360;
-    ck.style.setProperty('--b','0s');ck.style.setProperty('--rot',rot.toFixed(0)+'deg');
-    ck.style.setProperty('--ox',((Math.random()-.5)*innerWidth*.16).toFixed(0)+'px');ck.style.setProperty('--oy',((Math.random()-.5)*150).toFixed(0)+'px');
-    void ck.getBoundingClientRect();
-    ck.classList.add('live');
-    setTimeout(heal,HOLD);
+    setTimeout(()=>{if(ck.parentNode)ck.parentNode.removeChild(ck)},1300);
   }
   setTimeout(heal,1750+HOLD);
   /* light up the glass under the cursor */
   if(fine){
     const spot=$('#ckSpotC'), gl=$('#ckGlowC'); let px=0,py=0,wait=false;
-    hero.addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY;if(wait)return;wait=true;requestAnimationFrame(()=>{wait=false;
+    hero.addEventListener('pointermove',e=>{if(!ck.isConnected)return;px=e.clientX;py=e.clientY;if(wait)return;wait=true;requestAnimationFrame(()=>{wait=false;if(!ck.isConnected)return;
       const r=ck.getBoundingClientRect(), w=parseFloat(getComputedStyle(ck).width)||r.width, k=800/w, t=-rot*Math.PI/180;
       const dx=(px-(r.left+r.width/2))*k, dy=(py-(r.top+r.height/2))*k;
       const x=(400+dx*Math.cos(t)-dy*Math.sin(t)).toFixed(1), y=(400+dx*Math.sin(t)+dy*Math.cos(t)).toFixed(1);
