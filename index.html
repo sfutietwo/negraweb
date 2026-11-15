@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#060608">
-<link rel="icon" type="image/png" href="bugger-logo.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preload" as="image" href="storefront.webp" type="image/webp" media="(min-width:701px)" fetchpriority="high">
+<link rel="preload" as="image" href="storefront-sm.webp" type="image/webp" media="(max-width:700px)" fetchpriority="high">
 <link rel="manifest" href="manifest.webmanifest">
 <title>South Auckland Windscreen | Mobile Windscreen Service</title>
 <meta name="description" content="Fast mobile windscreen repair and replacement. Request a quote and tell us where you are.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700;1,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js')</script>
+<script>(function(d){d.classList.add('js');try{if(sessionStorage.getItem('saw_intro'))d.classList.add('no-intro');else sessionStorage.setItem('saw_intro','1')}catch(e){}})(document.documentElement)</script>
 <style>
 :root{
   --bg:#060608;--ink:#f5f2ea;--mute:#a09d95;--dim:#6f6c66;
@@ -37,9 +40,9 @@ img{max-width:100%;display:block}
 
 /* ambient light */
 .ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.ambient i{position:absolute;border-radius:50%;filter:blur(110px);opacity:.5;will-change:transform}
-.ambient i:nth-child(1){width:46vw;height:46vw;left:-14vw;top:8vh;background:radial-gradient(circle,rgba(255,196,0,.20),transparent 68%);animation:drift1 26s ease-in-out infinite alternate}
-.ambient i:nth-child(2){width:40vw;height:40vw;right:-12vw;top:48vh;background:radial-gradient(circle,rgba(255,170,0,.14),transparent 68%);animation:drift2 32s ease-in-out infinite alternate}
+.ambient i{position:absolute;border-radius:50%;opacity:.75;will-change:transform}
+.ambient i:nth-child(1){width:46vw;height:46vw;left:-14vw;top:8vh;background:radial-gradient(circle,rgba(255,196,0,.13),rgba(255,196,0,.05) 38%,transparent 70%);animation:drift1 26s ease-in-out infinite alternate}
+.ambient i:nth-child(2){width:40vw;height:40vw;right:-12vw;top:48vh;background:radial-gradient(circle,rgba(255,170,0,.10),rgba(255,170,0,.04) 38%,transparent 70%);animation:drift2 32s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate(12vw,22vh) scale(1.2)}}
 @keyframes drift2{to{transform:translate(-14vw,-26vh) scale(1.15)}}
 
@@ -104,14 +107,14 @@ nav.links a:hover:after,nav.links a.active:after{transform:scaleX(1);transform-o
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:100svh;padding:calc(var(--hdr) + 36px) 0 70px;display:flex;align-items:center;isolation:isolate;overflow:hidden}
-.hero-bg{position:absolute;inset:-6% 0 -6%;z-index:-3;transform:translate3d(0,var(--py,0px),0);will-change:transform}
-.hero-img{position:absolute;inset:0;background:url('storefront.jpg') 30% 40%/cover no-repeat;animation:kb 36s ease-in-out infinite alternate;filter:saturate(.85) contrast(1.1) brightness(.95)}
+.hero-bg{position:absolute;inset:-6% 0 -6%;z-index:-3;transform:translate3d(var(--bx,0px),calc(var(--py,0px) + var(--by,0px)),0) scale(1.03);will-change:transform}
+.hero-img{position:absolute;inset:0;background:url('storefront.webp') 30% 40%/cover no-repeat;animation:kb 36s ease-in-out infinite alternate;filter:saturate(.85) contrast(1.1) brightness(.95)}
 @keyframes kb{from{transform:scale(1.04) translate3d(0,0,0)}to{transform:scale(1.2) translate3d(-3%,-2%,0)}}
 .hero-shade{position:absolute;inset:0;z-index:-2;background:
   radial-gradient(70% 60% at 82% 48%,rgba(6,6,8,.15),rgba(6,6,8,.78) 80%),
   linear-gradient(90deg,rgba(6,6,8,.95) 0%,rgba(6,6,8,.78) 40%,rgba(6,6,8,.5) 100%),
   linear-gradient(0deg,var(--bg) 0%,transparent 28%)}
-.crack{position:absolute;right:-2%;top:50%;width:min(760px,64vw);aspect-ratio:1;transform:translateY(-50%);z-index:-1;pointer-events:none;opacity:.9;-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 72%);mask-image:radial-gradient(circle,#000 30%,transparent 72%)}
+.crack{position:absolute;right:-2%;top:50%;width:min(760px,64vw);aspect-ratio:1;transform:translate3d(var(--cx,0px),calc(-50% + var(--cy,0px)),0);z-index:-1;pointer-events:none;opacity:.9;-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 72%);mask-image:radial-gradient(circle,#000 30%,transparent 72%)}
 .crack path{fill:none;stroke:rgba(255,214,102,.55);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:crk 12s var(--ease) infinite;animation-delay:calc(var(--k)*.14s + .8s)}
 .crack circle{fill:rgba(255,214,102,.8);transform-origin:200px 200px;animation:pulse 12s ease-in-out infinite;animation-delay:.6s}
 @keyframes crk{0%{stroke-dashoffset:1;opacity:1}22%,70%{stroke-dashoffset:0;opacity:1}88%,100%{stroke-dashoffset:0;opacity:0}}
@@ -390,6 +393,73 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
   h1 .ln>span{transform:none}
   .track{animation:none}.marq{overflow:auto}
 }
+
+/* ================= enhancements ================= */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,input,textarea{touch-action:manipulation}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* film-grain static */
+.grain{position:fixed;inset:-120px;z-index:95;pointer-events:none;opacity:.075;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");will-change:transform}
+@media(hover:hover) and (pointer:fine){.grain{animation:grain .9s steps(1) infinite}}
+@keyframes grain{0%{transform:translate3d(0,0,0)}14%{transform:translate3d(-46px,32px,0)}28%{transform:translate3d(38px,-58px,0)}42%{transform:translate3d(-72px,-24px,0)}57%{transform:translate3d(54px,66px,0)}71%{transform:translate3d(-28px,84px,0)}85%{transform:translate3d(80px,-40px,0)}}
+
+/* cursor light */
+.glow{position:fixed;left:0;top:0;z-index:1;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,196,0,.085),rgba(255,196,0,.03) 40%,transparent 68%);opacity:0;transition:opacity .8s;will-change:transform}
+.glow.on{opacity:1}
+main,footer{position:relative;z-index:2}
+
+/* intro curtain */
+.intro{position:fixed;inset:0;z-index:400;display:grid;place-items:center;background:#060608;clip-path:inset(0);animation:introOut .95s var(--ease) 1s forwards}
+.intro img{height:clamp(84px,14vw,124px);width:auto;animation:introLogo .95s var(--ease) both}
+.intro i{position:absolute;left:50%;top:calc(50% + clamp(64px,10vw,92px));width:170px;height:2px;margin-left:-85px;border-radius:2px;background:var(--goldgrad);box-shadow:0 0 16px rgba(255,196,0,.8);transform-origin:left;animation:introBar .9s var(--ease) .12s both}
+@keyframes introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
+@keyframes introLogo{from{opacity:0;transform:scale(.82);filter:blur(12px)}}
+@keyframes introBar{from{transform:scaleX(0)}}
+.no-intro .intro{display:none}
+html:not(.no-intro) header{animation-delay:1.15s}
+html:not(.no-intro) h1 .ln:nth-child(1)>span{animation-delay:1.2s}
+html:not(.no-intro) h1 .ln:nth-child(2)>span{animation-delay:1.33s}
+html:not(.no-intro) h1 .ln:nth-child(3)>span{animation-delay:1.46s}
+html:not(.no-intro) h1 .ln>span.gold{animation-delay:1.33s,2.6s}
+html:not(.no-intro).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .95s)}
+
+/* split headings */
+.split .w{display:inline-block;clip-path:inset(-10% -40% -4% -10%);vertical-align:top}
+.split .w>span{display:inline-block;transform:translateY(125%) rotate(4deg);transform-origin:left bottom;transition:transform 1.05s var(--ease);transition-delay:calc(var(--i)*70ms + .08s)}
+.split.go .w>span{transform:none}
+
+/* pause off-screen work */
+.off,.off *,.off *:before,.off *:after,.off:before,.off:after{animation-play-state:paused!important}
+
+/* lighter effects on touch / small screens */
+@media(max-width:980px),(pointer:coarse){
+  .js [data-reveal]{filter:none;transform:translateY(26px);transition:opacity .75s var(--ease),transform .85s var(--ease);transition-delay:var(--d,0s)}
+  .qcard{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
+  .hero-img{animation-duration:48s}
+}
+@media(max-width:700px){
+  .hero-img{background-image:url('storefront-sm.webp')}
+  .grain{opacity:.06}
+}
+.clist{grid-template-columns:minmax(0,1fr)}
+.clist a,.clist div{min-width:0;overflow-wrap:anywhere}
+@media(max-width:700px){.clist a{font-size:15px;gap:12px}.clist .i{flex:0 0 40px}}
+@media(max-width:460px){.clist a{font-size:13.5px;letter-spacing:-.01em}}
+@media(max-width:360px){
+  .container{width:92%}
+  h1{font-size:clamp(38px,12.4vw,50px)}
+  .brand small{letter-spacing:.24em}
+  .qcard{padding:22px 16px 18px}
+}
+@media(prefers-reduced-motion:reduce){
+  .intro,.glow{display:none}
+  .grain{animation:none}
+  .split .w>span{transform:none}
+}
 </style>
 </head>
 <body>
@@ -413,13 +483,16 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
 </defs></svg>
 
+<div class="intro" aria-hidden="true"><img src="logo.webp" width="261" height="168" alt=""><i></i></div>
 <div class="ambient" aria-hidden="true"><i></i><i></i></div>
+<div class="glow" id="glow" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 <div id="progress" aria-hidden="true"></div>
 
 <header id="hdr">
   <div class="container bar">
     <a class="brand" href="#home" aria-label="South Auckland Windscreen home">
-      <img src="bugger-logo.png" alt="South Auckland Windscreen">
+      <img src="logo.webp" width="261" height="168" alt="South Auckland Windscreen" decoding="async" fetchpriority="high">
       <div><small>SOUTH AUCKLAND</small><strong>WINDSCREEN</strong></div>
     </a>
     <nav class="links" aria-label="Main navigation">
@@ -433,7 +506,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
   </div>
 </header>
 
-<div class="mmenu" id="mmenu" aria-label="Mobile navigation">
+<div class="mmenu" id="mmenu" aria-label="Mobile navigation" data-lenis-prevent>
   <a href="#home">HOME</a><a href="#services">SERVICES</a><a href="#how">HOW IT WORKS</a><a href="#ratings">RATINGS</a><a href="#contact">CONTACT</a>
   <a class="mm-c" href="tel:0800361139"><svg class="i"><use href="#i-phone"/></svg>0800 361 139</a>
   <a class="mm-c" href="tel:+64210337535"><svg class="i"><use href="#i-phone"/></svg>021 033 7535</a>
@@ -477,7 +550,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
         <a class="btn glass" href="#how">LEARN MORE</a>
       </div>
       <div class="cred" data-reveal style="--d:1s" aria-label="BCITO Qualified Professional">
-        <img class="bd" src="bcito-qualified.png" alt="BCITO Qualified Professional">
+        <img class="bd" src="bcito-qualified.webp" width="240" height="240" alt="BCITO Qualified Professional" decoding="async">
         <div><strong>BCITO QUALIFIED</strong><span>PROFESSIONAL RECOGNITION</span></div>
       </div>
     </div>
@@ -546,7 +619,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
       <div class="card" data-reveal data-spot data-tilt style="--d:.24s"><div class="ico"><svg class="i"><use href="#i-van"/></svg></div><h3>HEAVY MACHINERY &amp; MOBILE SERVICE</h3><p>On-site glass work for diggers, excavators, cranes, tractors, forklifts and other heavy machinery to minimise downtime.</p></div>
     </div>
     <div class="recog" data-reveal aria-label="BCITO recognition">
-      <div class="seal"><div><img src="bcito-qualified.png" alt="BCITO Qualified Professional"></div></div>
+      <div class="seal"><div><img src="bcito-qualified.webp" width="240" height="240" alt="BCITO Qualified Professional" loading="lazy" decoding="async"></div></div>
       <div>
         <span class="kick" style="padding:0">PROFESSIONAL RECOGNITION</span>
         <h3>BCITO QUALIFIED PROFESSIONAL</h3>
@@ -644,7 +717,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 
 <!-- confirm modal -->
 <div class="modal" id="submitModal" aria-hidden="true">
-  <div class="mbox" role="dialog" aria-modal="true" aria-labelledby="cm-t">
+  <div class="mbox" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="cm-t">
     <div class="mico"><svg class="i"><use href="#i-check"/></svg></div>
     <h3 id="cm-t">PLEASE CHECK YOUR REQUEST</h3>
     <p>Make sure the information below is correct before sending. <b>We will use these details to respond to your request.</b></p>
@@ -658,7 +731,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 
 <!-- result modal -->
 <div class="modal" id="referenceModal" aria-hidden="true">
-  <div class="mbox" role="dialog" aria-modal="true" aria-labelledby="rm-t">
+  <div class="mbox" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="rm-t">
     <div class="mico" id="rmIcon"><svg class="i"><use href="#i-check"/></svg></div>
     <div class="badge" id="referenceOnlineBadge">REQUEST SENT</div>
     <h3 id="rm-t">THANKS — WE'VE GOT YOUR REQUEST</h3>
@@ -669,6 +742,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="vendor/lenis.min.js" defer></script>
 <script src="saw-config.js"></script>
 <script>
 /* Sends the quote request straight to a serverless function which emails it. No login, no database. */
@@ -684,7 +758,7 @@ window.SAWCloud={
 };
 </script>
 <script>
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -694,11 +768,57 @@ const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){
   const el=e.target; el.classList.add('in'); io.unobserve(el);
   const d=parseFloat(el.style.getPropertyValue('--d'))||0;
-  setTimeout(()=>{el.removeAttribute('data-reveal');el.classList.remove('in')},(1.3+d)*1000);
+  setTimeout(()=>{el.removeAttribute('data-reveal');el.classList.remove('in')},(2.4+d)*1000);
 }}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
 $$('[data-reveal]').forEach(el=>io.observe(el));
 const howIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');howIO.disconnect()}}),{threshold:.3});
 howIO.observe($('#howRow'));
+
+/* ---- smooth scrolling (Lenis) ---- */
+let lenis=null;
+if(window.Lenis&&fine&&!reduce){
+  lenis=new Lenis({lerp:.095,wheelMultiplier:1,smoothWheel:true});
+}
+function goTo(target){
+  const y=target==='#home'?0:null, el=y===null?document.querySelector(target):null;
+  if(y===null&&!el) return false;
+  if(lenis) lenis.scrollTo(y===null?el:0,{offset:y===null?-88:0,duration:1.25,easing:t=>1-Math.pow(1-t,4)});
+  else if(y===0) scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  else el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  return true;
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const h=a.getAttribute('href'); if(h.length<2) return;
+  if(goTo(h)){e.preventDefault();history.replaceState(null,'',h)}
+});
+
+/* ---- split headings ---- */
+const splitIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('go');splitIO.unobserve(e.target)}}),{threshold:.3,rootMargin:'0px 0px -6% 0px'});
+$$('.stitle h2,h2.big,.recog h3,.cbox h3').forEach(h=>{
+  const txt=h.textContent.trim(); if(!txt||h.children.length) return;
+  h.setAttribute('aria-label',txt); h.textContent='';
+  txt.split(/\s+/).forEach((w,i,a)=>{
+    const o=document.createElement('span'),n=document.createElement('span');
+    o.className='w';o.setAttribute('aria-hidden','true');n.style.setProperty('--i',i);n.textContent=w;o.appendChild(n);h.appendChild(o);
+    if(i<a.length-1) h.appendChild(document.createTextNode(' '));
+  });
+  h.classList.add('split'); splitIO.observe(h);
+});
+
+/* ---- pause animations that are off screen ---- */
+const offIO=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('off',!e.isIntersecting)),{rootMargin:'120px 0px'});
+$$('.hero,.marq,.recog,.cbox.go').forEach(el=>offIO.observe(el));
+
+/* ---- rating count-up ---- */
+const avgEl=$('#avgRating');
+if(avgEl&&!reduce){
+  const cIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;cIO.disconnect();
+    const end=parseFloat(avgEl.textContent)||5,t0=performance.now(),dur=1400;
+    (function step(t){const k=Math.min((t-t0)/dur,1),v=end*(1-Math.pow(1-k,3));avgEl.textContent=v.toFixed(1);if(k<1)requestAnimationFrame(step);else avgEl.textContent=end.toFixed(1)})(t0);
+  }),{threshold:.6});
+  cIO.observe(avgEl);
+}
 
 /* ---- header, progress, parallax, fab ---- */
 const hdr=$('#hdr'), prog=$('#progress'), heroBg=$('#heroBg'), fab=$('#fab'), hero=$('.hero');
@@ -722,7 +842,7 @@ secs.forEach(s=>s&&navIO.observe(s));
 
 /* ---- mobile menu ---- */
 const burger=$('#burger'), mmenu=$('#mmenu');
-function menu(open){mmenu.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);document.body.classList.toggle('lock',open)}
+function menu(open){mmenu.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);document.body.classList.toggle('lock',open);if(lenis)open?lenis.stop():lenis.start()}
 burger.addEventListener('click',()=>menu(!mmenu.classList.contains('open')));
 mmenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu(false)));
 
@@ -747,6 +867,35 @@ if(fine&&!reduce){
   });
 }
 
+/* ---- frame loop: smooth scroll, cursor light, hero depth, marquee speed ---- */
+const glow=$('#glow'), crack=$('.crack');
+const tracks=$$('.track').map(t=>t.getAnimations()[0]).filter(Boolean);
+let gx=innerWidth/2,gy=innerHeight/2,cx=gx,cy=gy,hx=0,hy=0,thx=0,thy=0,rate=1;
+if(fine&&!reduce){
+  addEventListener('pointermove',e=>{gx=e.clientX;gy=e.clientY;glow.classList.add('on');
+    thx=(e.clientX/innerWidth-.5);thy=(e.clientY/innerHeight-.5)},{passive:true});
+  document.documentElement.addEventListener('pointerleave',()=>glow.classList.remove('on'));
+}
+function frame(t){
+  if(lenis) lenis.raf(t);
+  if(fine&&!reduce){
+    cx+=(gx-cx)*.12;cy+=(gy-cy)*.12;
+    glow.style.transform='translate3d('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px,0)';
+    if(scrollY<innerHeight){
+      hx+=(thx-hx)*.06;hy+=(thy-hy)*.06;
+      crack.style.setProperty('--cx',(hx*-34).toFixed(2)+'px');crack.style.setProperty('--cy',(hy*-26).toFixed(2)+'px');
+      heroBg.style.setProperty('--bx',(hx*14).toFixed(2)+'px');heroBg.style.setProperty('--by',(hy*10).toFixed(2)+'px');
+    }
+  }
+  if(lenis&&tracks.length){
+    const want=1+Math.min(Math.abs(lenis.velocity)/9,5);
+    rate+=(want-rate)*.1;
+    if(Math.abs(rate-(tracks[0].playbackRate||1))>.02) tracks.forEach(a=>a.playbackRate=rate);
+  }
+  requestAnimationFrame(frame);
+}
+if(lenis||(fine&&!reduce)) requestAnimationFrame(frame);
+
 /* ---- click ripple ---- */
 document.addEventListener('click',e=>{
   const b=e.target.closest('.btn,.submit'); if(!b||reduce) return;
@@ -759,8 +908,8 @@ document.addEventListener('click',e=>{
 const toastEl=$('#toast'); let tt;
 function toast(msg,ms=4200){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),ms)}
 const modals=[$('#submitModal'),$('#referenceModal')];
-function openM(m){m.classList.add('show');m.setAttribute('aria-hidden','false');document.body.classList.add('lock');setTimeout(()=>{const b=m.querySelector('.btn.gold');b&&b.focus({preventScroll:true})},350)}
-function closeM(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');if(!modals.some(x=>x.classList.contains('show')))document.body.classList.remove('lock')}
+function openM(m){m.classList.add('show');m.setAttribute('aria-hidden','false');document.body.classList.add('lock');if(lenis)lenis.stop();setTimeout(()=>{const b=m.querySelector('.btn.gold');b&&b.focus({preventScroll:true})},350)}
+function closeM(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');if(!modals.some(x=>x.classList.contains('show'))){document.body.classList.remove('lock');if(lenis&&!mmenu.classList.contains('open'))lenis.start()}}
 modals.forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeM(m)}));
 addEventListener('keydown',e=>{if(e.key==='Escape'){modals.forEach(closeM);menu(false)}});
 
@@ -862,7 +1011,7 @@ $('#postReview').addEventListener('click',()=>{
   toast('★★★★★  Thanks for your rating!',3500);
 });
 $('#reviewText').addEventListener('input',()=>$('#f-rtext').classList.remove('invalid'));
-})();
+});
 </script>
 </body>
 </html>
