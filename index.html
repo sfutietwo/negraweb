@@ -541,7 +541,7 @@ h1 .ln:hover>span:not(.gold){background-position:0 0;transition:background-posit
 header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,8,.92)}
 .mmenu{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,8,.975)}
 .btn.glass{backdrop-filter:none;-webkit-backdrop-filter:none;background-color:rgba(24,24,28,.6)}
-.qcard{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(160deg,rgba(34,33,36,.9),rgba(13,13,16,.88))}
+.qcard{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(160deg,#201f22,#0e0e11)}
 .toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,18,22,.97)}
 .card,.btn,.submit,.chip{will-change:transform}
 
@@ -722,8 +722,13 @@ header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgb
   .dmg p{font-size:11.8px;line-height:1.45;margin:0 4px}
   .dmg .go{font-size:9px;letter-spacing:.12em;margin:8px 4px 0;gap:5px}
   .fab{display:none!important}
-  .mbar{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:75;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(6,6,8,.96);border-top:1px solid var(--line2);transform:translateY(110%);transition:transform .5s var(--ease)}
-  .mbar.show{transform:none}
+  .mbar{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:96;padding:8px 12px calc(10px + env(safe-area-inset-bottom));background:#060608;visibility:hidden}
+  .mbar.show{visibility:visible}
+  .mbar:before{content:"";position:absolute;left:0;right:0;bottom:100%;height:28px;background:linear-gradient(to top,#060608,rgba(6,6,8,0));pointer-events:none}
+  .mbar:after{content:"";position:absolute;left:0;right:0;top:100%;height:120px;background:#060608}
+  .mbar .btn.glass{background-color:#17171b;border-color:rgba(255,255,255,.14)}
+  .mbar .btn.gold{box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+  .mmenu{padding-bottom:96px}
   .mbar .btn{padding:14px 8px;font-size:11.5px;letter-spacing:.12em}
   footer{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
   .toast{bottom:calc(78px + env(safe-area-inset-bottom))}
@@ -1000,7 +1005,7 @@ header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgb
       </div>
     </div>
 
-    <div id="quote" data-reveal style="--d:.55s">
+    <div id="quote" data-reveal style="--d:.15s">
       <div class="qcard" id="qcard"><i class="rim" aria-hidden="true"></i>
         <div class="pbar"><i id="pbar"></i></div>
 
@@ -1297,7 +1302,7 @@ function onScroll(){
   prog.style.transform='scaleX('+(max>0?y/max:0)+')';
   if(!reduce) heroBg.style.setProperty('--py',Math.min(y*.15,hero.offsetHeight*.05)+'px');
   fab.classList.toggle('show',y>hero.offsetHeight*.55);
-  mbar.classList.toggle('show',y>260&&!typing);
+  mbar.classList.toggle('show',!typing);
   tick=false;
 }
 addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});
