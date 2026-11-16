@@ -166,7 +166,7 @@ h1 .ln>span.gold{display:inline-block;padding-right:.12em;background:linear-grad
 .cred span{display:block;font:600 10px/1.5 var(--body);letter-spacing:.22em;color:var(--mute)}
 
 /* reveal system */
-.js [data-reveal]{opacity:0;transform:translate3d(0,34px,0) scale(.985);transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s);will-change:opacity,transform}
+.js [data-reveal]{opacity:0;transform:translate3d(0,34px,0) scale(.985);transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s)}
 .js [data-reveal].in{opacity:1;transform:none;filter:none}
 
 /* ---------- quote card ---------- */
@@ -435,7 +435,7 @@ html.lenis,html.lenis body{height:auto}
 
 /* film-grain static */
 .grain{position:fixed;inset:-120px;z-index:95;pointer-events:none;opacity:.075;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");will-change:transform}
-@media(hover:hover) and (pointer:fine){.grain{animation:grain .9s steps(1) infinite}}
+
 @keyframes grain{0%{transform:translate3d(0,0,0)}14%{transform:translate3d(-46px,32px,0)}28%{transform:translate3d(38px,-58px,0)}42%{transform:translate3d(-72px,-24px,0)}57%{transform:translate3d(54px,66px,0)}71%{transform:translate3d(-28px,84px,0)}85%{transform:translate3d(80px,-40px,0)}}
 
 /* cursor light */
@@ -743,8 +743,7 @@ header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgb
 #glass.on{visibility:visible}
 #glass i{position:absolute;top:-20%;bottom:-20%;left:-40%;width:calc(180% + 1100px);will-change:transform;
   background:linear-gradient(90deg,transparent 0,transparent 6%,rgba(255,255,255,.035) 9%,rgba(255,255,255,.17) 15%,rgba(255,255,255,.05) 19.5%,transparent 23%,transparent 31%,rgba(200,230,255,.10) 33.5%,rgba(255,255,255,.02) 36%,transparent 38%,transparent 62%,rgba(255,255,255,.06) 65%,rgba(255,236,190,.13) 69%,rgba(255,255,255,.02) 73%,transparent 76%,transparent 100%) 0 0/1100px 100% repeat-x}
-main{will-change:auto}
-html.tilting main{will-change:transform;backface-visibility:hidden}
+main{will-change:transform;transform:perspective(1500px) rotateX(0deg);backface-visibility:hidden}
 @media(prefers-reduced-motion:reduce){#glass{display:none}}
 </style>
 </head>
@@ -1330,15 +1329,15 @@ if(glass&&!reduce){
   const MAXT=fine?2.6:1.8;
   let ly=scrollY, lt=performance.now(), cur=0, tilt=0, vs=0, run=false, last=0;
   function glassLoop(t){
-    const dt=Math.min(Math.max(t-lt,1),60), y=scrollY, v=(y-ly)/dt*1000; ly=y; lt=t;
-    vs+=(v-vs)*(1-Math.exp(-dt/110));
+    const dt=Math.min(Math.max(t-lt,4),60), y=scrollY, v=(y-ly)/dt*1000; ly=y; lt=t;
+    vs+=(v-vs)*(1-Math.exp(-dt/200));
     const sp=Math.abs(vs), tgt=Math.min(Math.max(sp-120,0)/1800,1);
-    cur+=(tgt-cur)*(1-Math.exp(-dt/(tgt>cur?90:320)));
+    cur+=(tgt-cur)*(1-Math.exp(-dt/(tgt>cur?180:420)));
     const tt=Math.max(-1,Math.min(1,vs/2600))*MAXT;
-    tilt+=(tt-tilt)*(1-Math.exp(-dt/140));
+    tilt+=(tt-tilt)*(1-Math.exp(-dt/260));
     if(t-last>260&&cur<.004&&Math.abs(tilt)<.01){
       cur=0;tilt=0;glass.style.opacity=0;glass.classList.remove('on');
-      mainEl.style.transform='';root.classList.remove('tilting');run=false;return;
+      mainEl.style.transform='perspective(1500px) rotateX(0deg)';run=false;return;
     }
     glass.style.opacity=(cur*.9).toFixed(3);
     streaks.style.transform='translate3d('+(-((y*.55)%1100)).toFixed(1)+'px,0,0) skewX(-20deg)';
@@ -1346,7 +1345,7 @@ if(glass&&!reduce){
     mainEl.style.transform='perspective(1500px) rotateX('+tilt.toFixed(3)+'deg)';
     requestAnimationFrame(glassLoop);
   }
-  addEventListener('scroll',()=>{last=performance.now();if(run)return;run=true;lt=last-16;ly=scrollY;vs=0;glass.classList.add('on');root.classList.add('tilting');requestAnimationFrame(glassLoop)},{passive:true});
+  addEventListener('scroll',()=>{last=performance.now();if(run)return;run=true;lt=last-16;ly=scrollY;vs=0;glass.classList.add('on');requestAnimationFrame(glassLoop)},{passive:true});
 }
 
 /* ---- active nav ---- */
