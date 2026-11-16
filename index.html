@@ -166,7 +166,7 @@ h1 .ln>span.gold{display:inline-block;padding-right:.12em;background:linear-grad
 .cred span{display:block;font:600 10px/1.5 var(--body);letter-spacing:.22em;color:var(--mute)}
 
 /* reveal system */
-.js [data-reveal]{opacity:0;transform:translate3d(0,34px,0) scale(.985);transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.js [data-reveal]{opacity:0;transform:translate3d(0,34px,0) scale(.985);transition:opacity .6s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s)}
 .js [data-reveal].in{opacity:1;transform:none;filter:none}
 
 /* ---------- quote card ---------- */
@@ -391,7 +391,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 34px;color:var(--dim);fon
 @media(max-width:980px){
   .hero{padding-bottom:70px}
   .hero-bg,.hero-shade{bottom:auto;height:min(100%,860px)}
-  .hero-bg{-webkit-mask-image:linear-gradient(to bottom,#000 46%,transparent 86%);mask-image:linear-gradient(to bottom,#000 46%,transparent 86%)}
+  .hero-bg{transform:none!important;will-change:auto}
+  .hero-img{animation:none!important}
+  .hero-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,6,8,0) 44%,#060608 84%)}
+  .ambient i{animation:none!important}
+  .grain{display:none}
   .js #quote[data-reveal]{opacity:1;transform:none;transition:none}
   .js [data-reveal]{transition-delay:min(var(--d,0s),.1s)}
   .hero-grid{grid-template-columns:minmax(0,1fr);gap:46px}
@@ -479,7 +483,7 @@ html:not(.ready).js .hero [data-reveal]{transition-delay:calc(var(--d,0s) + .95s
 
 /* lighter effects on touch / small screens */
 @media(max-width:980px),(pointer:coarse){
-  .js [data-reveal]{filter:none;transform:translateY(26px);transition:opacity .75s var(--ease),transform .85s var(--ease);transition-delay:var(--d,0s)}
+  .js [data-reveal]{filter:none;transform:translateY(18px);transition:opacity .4s ease-out,transform .45s var(--ease);transition-delay:min(var(--d,0s),.08s)}
   .qcard{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
   .hero-img{animation-duration:48s}
 }
@@ -546,7 +550,6 @@ header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgb
 .btn.glass{backdrop-filter:none;-webkit-backdrop-filter:none;background-color:rgba(24,24,28,.6)}
 .qcard{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(160deg,#201f22,#0e0e11)}
 .toast{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,18,22,.97)}
-.card,.btn,.submit,.chip{will-change:transform}
 
 /* ================= phone layout: tighter, more on screen ================= */
 @media(max-width:700px){
@@ -738,12 +741,13 @@ header.scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgb
 }
 
 /* ---- windscreen glass: reflections slide across and the page tilts while scrolling ---- */
-#glass{position:fixed;inset:0;z-index:94;pointer-events:none;opacity:0;visibility:hidden;overflow:hidden;will-change:opacity;
-  background:radial-gradient(120% 55% at 50% -12%,rgba(255,255,255,.13),rgba(255,255,255,0) 62%),radial-gradient(120% 45% at 50% 112%,rgba(255,214,102,.07),rgba(255,214,102,0) 60%)}
+#glass{position:fixed;inset:0;z-index:94;pointer-events:none;visibility:hidden;overflow:hidden;contain:strict}
 #glass.on{visibility:visible}
-#glass i{position:absolute;top:-20%;bottom:-20%;left:-40%;width:calc(180% + 1100px);will-change:transform;
-  background:linear-gradient(90deg,transparent 0,transparent 6%,rgba(255,255,255,.035) 9%,rgba(255,255,255,.17) 15%,rgba(255,255,255,.05) 19.5%,transparent 23%,transparent 31%,rgba(200,230,255,.10) 33.5%,rgba(255,255,255,.02) 36%,transparent 38%,transparent 62%,rgba(255,255,255,.06) 65%,rgba(255,236,190,.13) 69%,rgba(255,255,255,.02) 73%,transparent 76%,transparent 100%) 0 0/1100px 100% repeat-x}
-main{will-change:transform;transform:perspective(1500px) rotateX(0deg);backface-visibility:hidden}
+#glass b{position:absolute;inset:0;opacity:0;will-change:opacity;background:radial-gradient(120% 55% at 50% -12%,rgba(255,255,255,.13),rgba(255,255,255,0) 62%),radial-gradient(120% 45% at 50% 112%,rgba(255,214,102,.07),rgba(255,214,102,0) 60%)}
+#glass i{position:absolute;top:-25%;left:0;height:150%;width:240px;opacity:0;will-change:transform,opacity;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04) 18%,rgba(255,255,255,.18) 55%,rgba(255,255,255,.05) 80%,transparent)}
+#glass i:nth-of-type(2){width:110px;background:linear-gradient(90deg,transparent,rgba(200,230,255,.11) 55%,transparent)}
+#glass i:nth-of-type(3){width:190px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05) 20%,rgba(255,236,190,.14) 58%,transparent)}
+#glass i:nth-of-type(4){width:80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.09) 50%,transparent)}
 @media(prefers-reduced-motion:reduce){#glass{display:none}}
 </style>
 </head>
@@ -778,7 +782,7 @@ main{will-change:transform;transform:perspective(1500px) rotateX(0deg);backface-
 <div class="glow" id="glow" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div id="sparks" aria-hidden="true"></div>
-<div id="glass" aria-hidden="true"><i></i></div>
+<div id="glass" aria-hidden="true"><b></b><i></i><i></i><i></i><i></i></div>
 <div id="progress" aria-hidden="true"></div>
 
 <header id="hdr">
@@ -1263,7 +1267,7 @@ howIO.observe($('#howRow'));
 /* ---- smooth scrolling (Lenis) ---- */
 let lenis=null;
 if(window.Lenis&&fine&&!reduce){
-  lenis=new Lenis({lerp:.11,wheelMultiplier:1,smoothWheel:true,syncTouch:false});
+  lenis=new Lenis({lerp:.15,wheelMultiplier:1,smoothWheel:true,syncTouch:false});
 }
 function goTo(target){
   const y=target==='#home'?0:null, el=y===null?document.querySelector(target):null;
@@ -1308,14 +1312,15 @@ if(avgEl&&!reduce){
 
 /* ---- header, progress, parallax, fab ---- */
 const hdr=$('#hdr'), prog=$('#progress'), heroBg=$('#heroBg'), fab=$('#fab'), hero=$('.hero');
-const mbar=$('#mbar'); let typing=false;
+const mbar=$('#mbar'); let typing=false, heroH=hero.offsetHeight;
+addEventListener('resize',()=>{heroH=hero.offsetHeight},{passive:true});
 let tick=false;
 function onScroll(){
   const y=scrollY, max=document.documentElement.scrollHeight-innerHeight;
   hdr.classList.toggle('scrolled',y>30);
   prog.style.transform='scaleX('+(max>0?y/max:0)+')';
-  if(!reduce) heroBg.style.setProperty('--py',Math.min(y*.15,hero.offsetHeight*.05)+'px');
-  fab.classList.toggle('show',y>hero.offsetHeight*.55);
+  if(!reduce&&fine&&y<heroH) heroBg.style.setProperty('--py',Math.min(y*.15,heroH*.05)+'px');
+  fab.classList.toggle('show',y>heroH*.55);
   mbar.classList.toggle('show',!typing);
   tick=false;
 }
@@ -1325,7 +1330,7 @@ onScroll();
 /* ---- windscreen glass while scrolling: reflections slide, page tilts with scroll speed ---- */
 const glass=$('#glass');
 if(glass&&!reduce){
-  const streaks=glass.firstElementChild, mainEl=$('main'), root=document.documentElement;
+  const glow2=glass.querySelector('b'), streaks=[...glass.querySelectorAll('i')], offs=[0,.3,.58,.84];
   const MAXT=fine?2.6:1.8;
   let ly=scrollY, lt=performance.now(), cur=0, tilt=0, vs=0, run=false, last=0;
   function glassLoop(t){
@@ -1336,13 +1341,16 @@ if(glass&&!reduce){
     const tt=Math.max(-1,Math.min(1,vs/2600))*MAXT;
     tilt+=(tt-tilt)*(1-Math.exp(-dt/260));
     if(t-last>260&&cur<.004&&Math.abs(tilt)<.01){
-      cur=0;tilt=0;glass.style.opacity=0;glass.classList.remove('on');
-      mainEl.style.transform='perspective(1500px) rotateX(0deg)';run=false;return;
+      cur=0;tilt=0;glass.classList.remove('on');
+      run=false;return;
     }
-    glass.style.opacity=(cur*.9).toFixed(3);
-    streaks.style.transform='translate3d('+(-((y*.55)%1100)).toFixed(1)+'px,0,0) skewX(-20deg)';
-    mainEl.style.transformOrigin='50% '+(y+innerHeight/2).toFixed(0)+'px';
-    mainEl.style.transform='perspective(1500px) rotateX('+tilt.toFixed(3)+'deg)';
+    const o=(cur*.9).toFixed(3), span=innerWidth+800, sk=(-20-tilt*4.5).toFixed(2);
+    glow2.style.opacity=o;
+    for(let i=0;i<4;i++){
+      const x=(((offs[i]*span-y*.55)%span)+span)%span-400;
+      streaks[i].style.opacity=o;
+      streaks[i].style.transform='translate3d('+x.toFixed(1)+'px,0,0) skewX('+sk+'deg)';
+    }
     requestAnimationFrame(glassLoop);
   }
   addEventListener('scroll',()=>{last=performance.now();if(run)return;run=true;lt=last-16;ly=scrollY;vs=0;glass.classList.add('on');requestAnimationFrame(glassLoop)},{passive:true});
